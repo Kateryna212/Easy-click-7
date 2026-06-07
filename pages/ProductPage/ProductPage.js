@@ -5,18 +5,23 @@ import { Footer } from '../../components/Footer/Footer.js';
 import { fetchProducts } from '../../services/api.js';
 
 export function ProductPage() {
+    // Отримуємо дані з нашого сервісу
     const products = fetchProducts(); 
-    const appContainer = document.createElement('div');
-    appContainer.className = 'page-container';
-
-    // Інтегруємо назву Easy-click у Header
-    appContainer.appendChild(Header({ title: "Easy-click | Маркетплейс" }));
     
-    appContainer.appendChild(Navigation({ links: ['Головна', 'Каталог', 'Про Easy-click', 'Контакти'] }));
+    const pageContainer = document.createElement('div');
+    pageContainer.className = 'page-container';
 
+    // 1. Додаємо Header
+    pageContainer.appendChild(Header({ title: "Easy-click | Твій швидкий маркетплейс" }));
+    
+    // 2. Додаємо Навігацію
+    pageContainer.appendChild(Navigation({ links: ['Головна', 'Каталог', 'Про Easy-click', 'Контакти'] }));
+
+    // 3. Створюємо список карток (CardList)
     const cardListContainer = document.createElement('main');
     cardListContainer.className = 'card-list';
 
+    // Рендеримо картки в циклі (Повторне використання компонента Card)
     products.forEach(product => {
         const cardElement = Card({ 
             title: product.name, 
@@ -26,10 +31,10 @@ export function ProductPage() {
         cardListContainer.appendChild(cardElement);
     });
 
-    appContainer.appendChild(cardListContainer);
+    pageContainer.appendChild(cardListContainer);
 
-    // Інтегруємо назву Easy-click у Footer
-    appContainer.appendChild(Footer({ year: 2026, author: "Команда Easy-click" }));
+    // 4. Додаємо Footer
+    pageContainer.appendChild(Footer({ year: 2026, author: "Команда розробки Easy-click" }));
 
-    return appContainer;
+    return pageContainer;
 }
